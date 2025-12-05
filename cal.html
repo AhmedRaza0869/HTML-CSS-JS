@@ -153,82 +153,95 @@
             <button>+/-</button>
         </div>
     </div>
+<script>
+    let display = document.getElementById("display");
+let memory = 0;
+let grandTotal = 0;
 
+document.querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", () => handle(btn.innerText));
+});
 
-    <script>
-        let display = document.getElementById("display");
-        let memory = 0;
-        let grandTotal = 0;
+function handle(value) {
 
-        document.querySelectorAll("button").forEach(btn => {
-            btn.addEventListener("click", () => handle(btn.innerText));
-        });
+    const operators = ["+", "-", "*", "/", "%"];
 
-        function handle(value) {
+    if (operators.includes(value)) {
 
-            if (value === "AC") {
-                display.value = "";
-                return;
-            }
+        let lastChar = display.value.slice(-1);
 
-            if (value === "CE") {
-                display.value = display.value.slice(0, -1);
-                return;
-            }
-
-            if (value === "=") {
-                try {
-                    display.value = eval(display.value);
-                    grandTotal += Number(display.value);
-                } catch {
-                    display.value = "Error";
-                }
-                return;
-            }
-
-            if (value === "%") {
-                display.value = Number(display.value) / 100;
-                return;
-            }
-
-            if (value === "sqrt(x)") {
-                display.value = Math.sqrt(Number(display.value));
-                return;
-            }
-
-            if (value === "+/-") {
-                display.value = -Number(display.value);
-                return;
-            }
-
-            if (value === "M+=") {
-                memory += Number(display.value);
-                return;
-            }
-
-            if (value === "M-=") {
-                memory -= Number(display.value);
-                return;
-            }
-
-            if (value === "MRC") {
-                display.value = memory;
-                return;
-            }
-
-            if (value === "GT") {
-                display.value = grandTotal;
-                return; 
-            }
-
-            if (value === "Auto-Replay" || value === "MU") {
-                return;
-            }
-
-            display.value += value;
+        if (operators.includes(lastChar)) {
+            return;
         }
-    </script>
+    }
+
+    if (value === "AC") {
+        display.value = "";
+        return;
+    }
+
+    if (value === "CE") {
+        display.value = display.value.slice(0, -1);
+        return;
+    }
+
+    if (value === "=") {
+        try {
+            display.value = eval(display.value);
+            grandTotal += Number(display.value);
+        } catch {
+            display.value = "Error";
+        }
+        return;
+    }
+
+    if (value === "%") {
+        if (display.value !== "") {
+            display.value = Number(display.value) / 100;
+        }
+        return;
+    }
+
+    if (value === "sqrt(x)") {
+        display.value = Math.sqrt(Number(display.value));
+        return;
+    }
+
+    if (value === "+/-") {
+        display.value = -Number(display.value);
+        return;
+    }
+
+    if (value === "M+=") {
+        memory += Number(display.value);
+        return;
+    }
+
+    if (value === "M-=") {
+        memory -= Number(display.value);
+        return;
+    }
+
+    if (value === "MRC") {
+        display.value = memory;
+        return;
+    }
+
+    if (value === "GT") {
+        display.value = grandTotal;
+        return;
+    }
+
+    if (value === "Auto-Replay" || value === "MU") {
+        return;
+    }
+
+    display.value += value;
+}
+
+</script>
+
+   
 
 </body>
 </html>
-
